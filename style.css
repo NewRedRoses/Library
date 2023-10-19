@@ -3,7 +3,13 @@ body {
   font-family: IBM Plex Sans, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
     sans-serif;
-  background-color: cadetblue;
+  --container-background-color: #F8F8F8 ;
+  --card-background-color: #FAFAFA ;
+  --card-text-icons-color: #333333;
+  --highlight-accent-color: #B3CCFF ;
+  --accent-color: #8C7B75;
+  --accent-contrast-color: #5F7268;
+  background-color: var(--container-background-color);
 }
 p{
     font-size: clamp(2rem, 4vw+1rem, 3rem);
@@ -26,23 +32,25 @@ ul {
 .book {
   display: flex;
   flex-direction: column;
-  width: 200px;
+  width: 150px;
   padding: 20px;
-  box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.064);
-  border-radius: 5%;
-  background-color: bisque;
+  border: 1px solid var(--accent-color);
+  /* box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.064); */
+  border-radius: 20px;
+  background-color: var(--card-background-color);
   gap: 10px;
 }
 .book-attribute {
   display: flex;
 }
 dialog {
+  border: 0px var(--accent-color);
   border-radius: 5%;
   padding: 30px;
 }
 ::backdrop {
   background-color: black;
-  opacity: 0.75;
+  opacity: 0.65;
 }
 .modal-form {
   display: flex;
@@ -61,12 +69,14 @@ dialog {
   height: 25px;
 }
 button {
-  background-color: aliceblue;
+  background-color: var(--highlight-accent-color);
   font-family: Rubik;
   position: relative;
   border: 0px;
   font-weight: 450;
   border-radius: 5%;
+  width: 80px;
+  height: 30px;
 }
 button:active {
   top: 1px;
