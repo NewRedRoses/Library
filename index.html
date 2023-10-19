@@ -9,7 +9,9 @@
   </head>
   <body>
     <div class="container">
-      <h3>Library</h3>
+      <div class="header">
+              <div>Library</div>
+      </div>
       <ul id="library"></ul>
         
       <dialog>
@@ -25,12 +27,12 @@
           <input type="number" id="bookPages" required />
 
           <label for="bookFinished">Finished</label>
-          <input type="checkbox" id="bookFinished" onclick="check(this)" onsubmit="this">
+          <input type="checkbox" id="bookFinished" onclick="Library.check(this)" onsubmit="this">
 
-          <button type="submit" id="submit-btn">Save book</button>
+          <button type="submit" id="submit-btn">Save Book</button>
         </form>
       </dialog>
-      <button>Add book</button>
+      <button>Add Book</button>
     </div>
   </body>
 </html>
