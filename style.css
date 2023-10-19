@@ -32,6 +32,9 @@ p {
   align-items: center;
   border-bottom: 1px solid var(--card-border-color);
 }
+.add-book-btn-container{
+  padding: 10px;
+}
 
 .container {
   display: flex;

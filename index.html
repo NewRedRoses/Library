@@ -5,15 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Library</title>
     <link rel="stylesheet" href="style.css" />
-    <script src="/javascript.js" defer></script>
+    <script src="javascript.js" defer></script>
   </head>
   <body>
     <div class="container">
       <div class="header">
-              <div>Library</div>
+        <div>Library</div>
       </div>
+    
       <ul id="library"></ul>
-        
+        <div class="add-book-btn-container">
+        <button id="add-book-btn">Add Book</button>
+      </div>
       <dialog>
         <h2>Enter book details</h2>
         <form action="" method="" id="add-book-form" class="modal-form">
@@ -27,12 +30,16 @@
           <input type="number" id="bookPages" required />
 
           <label for="bookFinished">Finished</label>
-          <input type="checkbox" id="bookFinished" onclick="Library.check(this)" onsubmit="this">
+          <input
+            type="checkbox"
+            id="bookFinished"
+            onclick="Library.check(this)"
+            onsubmit="this"
+          />
 
           <button type="submit" id="submit-btn">Save Book</button>
         </form>
       </dialog>
-      <button>Add Book</button>
     </div>
   </body>
 </html>
