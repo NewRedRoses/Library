@@ -1,76 +1,59 @@
 const myLibrary = [];
 
-function Book(id,title, author, numOfPages, isRead) {
-  this.id = id;
-  this.title = title;
-  this.author = author;
-  this.numOfPages = numOfPages + " pgs";
-  this.isRead = isRead;
-}
+// This new version refactors code with classes.
 
-function addBookToLibrary(id,title, author, numOfPages, isRead) {
-  return myLibrary.push(new Book(id,title, author, numOfPages, isRead));
-}
-
-addBookToLibrary(0,"Berserk Vol. 1", "Kentaro Miura", 224, "Finished");
-addBookToLibrary(1,"Monster Vol. 1", "Naoki Urusawa", 426, "Finished");
-addBookToLibrary(2,"Jojo's Bizarre Adventure", "Hirohiko Araki", 256, "Unfinished");
-
-function getId(book) {
-  return myLibrary.indexOf(myLibrary[book.id]);
-}
-
-function deleteBook(content, book) {
-  const deleteBookBtn = document.createElement("button");
-  deleteBookBtn.classList.add("deleteBookBtn");
-  deleteBookBtn.textContent = "Delete";
-  deleteBookBtn.addEventListener("click", function (e) {
-    
-    let index = getId(book);
+class Book {
+  constructor(id, title, author, numOfPages, isRead) {
+    this.id = id;
+    this.title = title;
+    this.author = author;
+    this.numOfPages = numOfPages;
+    this.isRead = isRead;
+  }
+  addBookToLibrary() {
+    myLibrary.push(
+      new Book(this.id, this.title, this.author, this.numOfPages, this.isRead)
+    );
+  }
+  getId() {
+    return myLibrary.indexOf(myLibrary[this.id]);
+  }
+  removeBookFromLibrary() {
+    let index = this.getId();
     myLibrary.splice(index, 1);
-    console.log(myLibrary)
-    displayAllBooks();
-    
-  })
-  content.appendChild(deleteBookBtn);
-}
-
-function editBook(content,book) {
-  const editBtn = document.createElement("button");
-  editBtn.classList.add("edit-book-btn");
-  editBtn.textContent = "Change status";
-  let id = getId(book);
-  editBtn.addEventListener('click', function () {
-    book.isRead == "Finished" ? (book.isRead = "Unfinished") : (book.isRead = "Finished");
-    console.log(book.isRead);
-    displayAllBooks()
-  })
-  content.appendChild(editBtn);
+  }
 }
 
 function displayAllBooks() {
-  const container = document.querySelector("#library");
+  const container = document.getElementById("library");
   container.innerHTML = ""; // Clear existing books
   for (let book of myLibrary) {
     const content = document.createElement("li");
     content.classList.add("book");
     for (let prop in book) {
       if (prop != "id") {
-          const contentItem = document.createElement("div");
-          contentItem.classList.add("book-attribute");
-          contentItem.textContent = book[prop];
-          content.appendChild(contentItem);
+        const contentItem = document.createElement("div");
+        contentItem.classList.add("book-attribute");
+        contentItem.textContent = book[prop];
+        content.appendChild(contentItem);
       }
     }
     const buttons = document.createElement("div");
-    buttons.classList.add("buttons")
-    deleteBook(buttons, book);
-    editBook(buttons,book);
+    buttons.classList.add("buttons");
+    // deleteBook(buttons, book);
+    // editBook(buttons, book);
     content.appendChild(buttons);
     container.appendChild(content);
   }
 }
+const berserk = new Book(0, "Berserk Vol. 1", "Kentaro Miura", 224, "Finished");
+const monster = new Book(1, "Monster Vol. 1", "Naoki Urusawa", 426, "Finished");
+berserk.addBookToLibrary();
+monster.addBookToLibrary();
 
+displayAllBooks();
+
+// console.log(myLibrary)
 const dialog = document.querySelector("dialog");
 const showButton = document.querySelector("dialog + button");
 const closeButton = document.querySelector("#submit-btn");
@@ -80,12 +63,11 @@ showButton.addEventListener("click", () => {
   dialog.showModal();
 });
 let checkedValue;
-function check(obj) {;
+function check(obj) {
   if (obj.checked) {
-    checkedValue = "Finished"
-  }
-  else {
-      checkedValue = "Unfinished";
+    checkedValue = "Finished";
+  } else {
+    checkedValue = "Unfinished";
   }
 }
 
@@ -100,17 +82,7 @@ closeButton.addEventListener("click", (event) => {
     {}
   );
   let isRead = document.getElementById("bookFinished").value;
-  console.log(isRead)
-  addBookToLibrary(
-    myLibrary.length,
-    formValues.bookTitle,
-    formValues.bookAuthor,
-    formValues.bookPages,
-    checkedValue,
-  );
-  displayAllBooks();
+  console.log(isRead);
+
   dialog.close();
 });
-
-
-displayAllBooks();
