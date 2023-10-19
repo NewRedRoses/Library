@@ -1,0 +1,116 @@
+const myLibrary = [];
+
+function Book(id,title, author, numOfPages, isRead) {
+  this.id = id;
+  this.title = title;
+  this.author = author;
+  this.numOfPages = numOfPages + " pgs";
+  this.isRead = isRead;
+}
+
+function addBookToLibrary(id,title, author, numOfPages, isRead) {
+  return myLibrary.push(new Book(id,title, author, numOfPages, isRead));
+}
+
+addBookToLibrary(0,"Berserk Vol. 1", "Kentaro Miura", 224, "Finished");
+addBookToLibrary(1,"Monster Vol. 1", "Naoki Urusawa", 426, "Finished");
+addBookToLibrary(2,"Jojo's Bizarre Adventure", "Hirohiko Araki", 256, "Unfinished");
+
+function getId(book) {
+  return myLibrary.indexOf(myLibrary[book.id]);
+}
+
+function deleteBook(content, book) {
+  const deleteBookBtn = document.createElement("button");
+  deleteBookBtn.classList.add("deleteBookBtn");
+  deleteBookBtn.textContent = "Delete";
+  deleteBookBtn.addEventListener("click", function (e) {
+    
+    let index = getId(book);
+    myLibrary.splice(index, 1);
+    console.log(myLibrary)
+    displayAllBooks();
+    
+  })
+  content.appendChild(deleteBookBtn);
+}
+
+function editBook(content,book) {
+  const editBtn = document.createElement("button");
+  editBtn.classList.add("edit-book-btn");
+  editBtn.textContent = "Change status";
+  let id = getId(book);
+  editBtn.addEventListener('click', function () {
+    book.isRead == "Finished" ? (book.isRead = "Unfinished") : (book.isRead = "Finished");
+    console.log(book.isRead);
+    displayAllBooks()
+  })
+  content.appendChild(editBtn);
+}
+
+function displayAllBooks() {
+  const container = document.querySelector("#library");
+  container.innerHTML = ""; // Clear existing books
+  for (let book of myLibrary) {
+    const content = document.createElement("li");
+    content.classList.add("book");
+    for (let prop in book) {
+      if (prop != "id") {
+          const contentItem = document.createElement("div");
+          contentItem.classList.add("book-attribute");
+          contentItem.textContent = book[prop];
+          content.appendChild(contentItem);
+      }
+    }
+    const buttons = document.createElement("div");
+    buttons.classList.add("buttons")
+    deleteBook(buttons, book);
+    editBook(buttons,book);
+    content.appendChild(buttons);
+    container.appendChild(content);
+  }
+}
+
+const dialog = document.querySelector("dialog");
+const showButton = document.querySelector("dialog + button");
+const closeButton = document.querySelector("#submit-btn");
+
+// "Show the dialog" button opens the dialog modally
+showButton.addEventListener("click", () => {
+  dialog.showModal();
+});
+let checkedValue;
+function check(obj) {;
+  if (obj.checked) {
+    checkedValue = "Finished"
+  }
+  else {
+      checkedValue = "Unfinished";
+  }
+}
+
+// "Close" button closes the dialog
+closeButton.addEventListener("click", (event) => {
+  event.preventDefault();
+  // first get the nodeList
+  let nodeListValues = document.querySelectorAll("#add-book-form input");
+  // turn nodeList into array, use reduce to clean it into an object
+  let formValues = Array.from(nodeListValues).reduce(
+    (acc, input) => ({ ...acc, [input.id]: input.value }),
+    {}
+  );
+  let isRead = document.getElementById("bookFinished").value;
+  console.log(isRead)
+  addBookToLibrary(
+    myLibrary.length,
+    formValues.bookTitle,
+    formValues.bookAuthor,
+    formValues.bookPages,
+    checkedValue,
+  );
+  displayAllBooks();
+  dialog.close();
+});
+
+
+displayAllBooks();
