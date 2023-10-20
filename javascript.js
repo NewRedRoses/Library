@@ -29,7 +29,13 @@ const Library = (() => {
       {}
     );
     let newId = myLibrary.length;
-    let test = new Book(newId, formValues.bookTitle, formValues.bookAuthor, formValues.bookPages, "unfinished");
+    let test = new Book(
+      newId,
+      formValues.bookTitle,
+      formValues.bookAuthor,
+      formValues.bookPages,
+      "unfinished"
+    );
     test.addBookToLibrary();
     console.log(formValues);
     displayAllBooks();
@@ -52,7 +58,7 @@ const Library = (() => {
       }
       const buttons = document.createElement("div");
       buttons.classList.add("buttons");
-      // deleteBook(buttons, book);
+      book.removeBookFromLibrary(buttons, book);
       book.editBook(buttons, book);
       content.appendChild(buttons);
       container.appendChild(content);
@@ -76,9 +82,17 @@ class Book {
   getId() {
     return myLibrary.indexOf(myLibrary[this.id]);
   }
-  removeBookFromLibrary() {
-    let index = this.getId();
-    myLibrary.splice(index, 1);
+  removeBookFromLibrary(content, book) {
+    const deleteBookBtn = document.createElement("button");
+    deleteBookBtn.classList.add("deleteBookBtn");
+    deleteBookBtn.textContent = "X";
+    deleteBookBtn.addEventListener("click", function (e) {
+      let index = book.id;
+      myLibrary.splice(index, 1);
+      console.log(myLibrary);
+      displayAllBooks();
+    });
+    content.appendChild(deleteBookBtn);
   }
   editBook(content, book) {
     const editBtn = document.createElement("button");
