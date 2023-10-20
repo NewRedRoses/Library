@@ -1,3 +1,10 @@
+@font-face {
+  font-family: Rubik;
+  src: url(Rubik-Regular.woff);
+}
+* {
+  font-family: Rubik;
+}
 body {
   height: 100vh;
   margin: 0px;
@@ -8,17 +15,12 @@ body {
   --card-border-color: #d5d5d5;
   --button-background-color: #34a387;
   --button-text-color: #f5e6cc;
+  --highlight-color: var(--button-background-color);
   background-color: var(--container-background-color);
 }
-@font-face {
-  font-family: Rubik;
-  src: url(Rubik-Regular.woff);
-}
-* {
-  font-family: Rubik;
-}
 *::selection {
-  background-color: var(--accent-color);
+  background-color: var(--highlight-color);
+  color: var(--button-text-color)
 }
 p {
   font-size: clamp(2rem, 4vw+1rem, 3rem);
@@ -32,7 +34,7 @@ p {
   align-items: center;
   border-bottom: 1px solid var(--card-border-color);
 }
-.add-book-btn-container{
+.add-book-btn-container {
   padding: 10px;
 }
 
@@ -40,7 +42,6 @@ p {
   display: flex;
   height: 100%;
   flex-direction: column;
-  /* justify-content: center; */
   align-items: center;
 }
 ul {
@@ -66,6 +67,7 @@ ul {
   display: flex;
 }
 dialog {
+  background-color: var(--card-background-color);
   border: 0px var(--accent-color);
   border-radius: 5%;
   padding: 30px;
@@ -76,6 +78,7 @@ dialog {
 }
 .modal-form {
   display: flex;
+  gap: 10px;
   flex-direction: column;
 }
 .deleteBookBtn,
