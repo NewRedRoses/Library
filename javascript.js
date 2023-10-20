@@ -34,7 +34,7 @@ const Library = (() => {
       formValues.bookTitle,
       formValues.bookAuthor,
       formValues.bookPages,
-      "unfinished"
+      "Unfinished"
     );
     test.addBookToLibrary();
     console.log(formValues);
@@ -86,8 +86,9 @@ class Book {
     const deleteBookBtn = document.createElement("button");
     deleteBookBtn.classList.add("deleteBookBtn");
     deleteBookBtn.textContent = "X";
+    const self = this;
     deleteBookBtn.addEventListener("click", function (e) {
-      let index = book.id;
+      let index = self.getId(book);
       myLibrary.splice(index, 1);
       console.log(myLibrary);
       displayAllBooks();
@@ -98,7 +99,8 @@ class Book {
     const editBtn = document.createElement("button");
     editBtn.classList.add("edit-book-btn");
     editBtn.textContent = "Change status";
-    let id = this.getId(book);
+    const self = this;
+    let id = self.getId(book);
     editBtn.addEventListener("click", function () {
       book.isRead == "Finished"
         ? (book.isRead = "Unfinished")
