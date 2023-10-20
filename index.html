@@ -28,14 +28,17 @@
 
           <label for="bookPages">Page number</label>
           <input type="number" id="bookPages" required />
-
-          <label for="bookFinished">Finished</label>
+          <div>
+              <label for="bookFinished">Finished</label>
           <input
             type="checkbox"
             id="bookFinished"
             onclick="Library.check(this)"
             onsubmit="this"
           />
+
+          </div>
+        
 
           <button type="submit" id="submit-btn">Save Book</button>
         </form>

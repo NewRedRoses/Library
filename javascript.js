@@ -28,9 +28,12 @@ const Library = (() => {
       (acc, input) => ({ ...acc, [input.id]: input.value }),
       {}
     );
-    let isRead = document.getElementById("bookFinished").value;
-    console.log(isRead);
-
+    let newId = myLibrary.length;
+    let test = new Book(newId, formValues.bookTitle, formValues.bookAuthor, formValues.bookPages, "unfinished");
+    test.addBookToLibrary();
+    console.log(formValues);
+    displayAllBooks();
+    console.log(myLibrary);
     dialog.close();
   });
   displayAllBooks = () => {
@@ -68,9 +71,7 @@ class Book {
     this.isRead = isRead;
   }
   addBookToLibrary() {
-    myLibrary.push(
-      new Book(this.id, this.title, this.author, this.numOfPages, this.isRead)
-    );
+    myLibrary.push(this);
   }
   getId() {
     return myLibrary.indexOf(myLibrary[this.id]);
