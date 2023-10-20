@@ -53,7 +53,7 @@ const Library = (() => {
       const buttons = document.createElement("div");
       buttons.classList.add("buttons");
       // deleteBook(buttons, book);
-      // editBook(buttons, book);
+      book.editBook(buttons, book);
       content.appendChild(buttons);
       container.appendChild(content);
     }
@@ -79,6 +79,20 @@ class Book {
   removeBookFromLibrary() {
     let index = this.getId();
     myLibrary.splice(index, 1);
+  }
+  editBook(content, book) {
+    const editBtn = document.createElement("button");
+    editBtn.classList.add("edit-book-btn");
+    editBtn.textContent = "Change status";
+    let id = this.getId(book);
+    editBtn.addEventListener("click", function () {
+      book.isRead == "Finished"
+        ? (book.isRead = "Unfinished")
+        : (book.isRead = "Finished");
+      console.log(book.isRead);
+      displayAllBooks();
+    });
+    content.appendChild(editBtn);
   }
 }
 
