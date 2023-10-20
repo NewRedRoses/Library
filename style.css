@@ -49,6 +49,9 @@ ul {
 }
 #library {
   display: flex;
+  padding: 0px;
+  width: 100%;
+  justify-content: center;
   gap: 20px;
   flex-wrap: wrap;
 }
@@ -83,7 +86,7 @@ dialog {
 }
 .deleteBookBtn,
 .edit-book-btn {
-  color:white;
+  color: white;
 }
 .deleteBookBtn {
   background-color: #e35a5a;
