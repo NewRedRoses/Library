@@ -1,47 +1,29 @@
 const myLibrary = [];
-
+let checkedValue;
+function check(obj) {
+  if (obj.checked) {
+    checkedValue = "Finished";
+  } else {
+    checkedValue = "Unfinished";
+  }
+}
 const Library = (() => {
-  // console.log(myLibrary)
   const dialog = document.querySelector("dialog");
   const showButton = document.getElementById("add-book-btn");
-  const closeButton = document.querySelector("#submit-btn");
+  const submitButton = document.querySelector(".modal-form");
 
   // "Show the dialog" button opens the dialog modally
   showButton.addEventListener("click", () => {
     dialog.showModal();
   });
-  let checkedValue;
-  function check(obj) {
-    if (obj.checked) {
-      checkedValue = "Finished";
-    } else {
-      checkedValue = "Unfinished";
-    }
-  }
+
   // "Close" button closes the dialog
-  closeButton.addEventListener("click", (event) => {
+  submitButton.addEventListener("submit", (event) => {
     event.preventDefault();
-    // first get the nodeList
-    let nodeListValues = document.querySelectorAll("#add-book-form input");
-    // turn nodeList into array, use reduce to clean it into an object
-    let formValues = Array.from(nodeListValues).reduce(
-      (acc, input) => ({ ...acc, [input.id]: input.value }),
-      {}
-    );
-    let newId = myLibrary.length;
-    let test = new Book(
-      newId,
-      formValues.bookTitle,
-      formValues.bookAuthor,
-      formValues.bookPages,
-      "Unfinished"
-    );
-    test.addBookToLibrary();
-    console.log(formValues);
-    displayAllBooks();
-    console.log(myLibrary);
+    saveFormDataToBook();
     dialog.close();
   });
+
   displayAllBooks = () => {
     const container = document.getElementById("library");
     container.innerHTML = ""; // Clear existing books
@@ -66,7 +48,25 @@ const Library = (() => {
   };
   return { displayAllBooks };
 })();
-
+function saveFormDataToBook() {
+  // first get the nodeList
+  let nodeListValues = document.querySelectorAll("#add-book-form input");
+  // turn nodeList into array, use reduce to clean it into an object
+  let formValues = Array.from(nodeListValues).reduce(
+    (acc, input) => ({ ...acc, [input.id]: input.value }),
+    {}
+  );
+  let newId = myLibrary.length;
+  let test = new Book(
+    newId,
+    formValues.bookTitle,
+    formValues.bookAuthor,
+    formValues.bookPages,
+    "Unfinished"
+  );
+  test.addBookToLibrary();
+  displayAllBooks();
+}
 // This new version refactors code with classes.
 class Book {
   constructor(id, title, author, numOfPages, isRead) {
@@ -90,7 +90,6 @@ class Book {
     deleteBookBtn.addEventListener("click", function (e) {
       let index = self.getId(book);
       myLibrary.splice(index, 1);
-      console.log(myLibrary);
       displayAllBooks();
     });
     content.appendChild(deleteBookBtn);
@@ -105,7 +104,6 @@ class Book {
       book.isRead == "Finished"
         ? (book.isRead = "Unfinished")
         : (book.isRead = "Finished");
-      console.log(book.isRead);
       displayAllBooks();
     });
     content.appendChild(editBtn);
